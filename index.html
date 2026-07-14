@@ -6,7 +6,23 @@
   <title>Find Your Seat</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 <style>
-  :root{
+  *{
+  box-sizing: border-box;
+}
+
+html, body{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  color: var(--text);
+}
+
+:root{
   --bg: #f7f4f1;
   --bg-soft: #fcfaf7;
   --card: rgba(255,255,255,0.78);
@@ -27,6 +43,12 @@
   --max: 760px;
 }
 
+  .page{
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 .search-label{
   display:block;
   text-align:left;
@@ -43,7 +65,8 @@
   margin-top: 14px;
 }
 
-.quick-links a{
+.quick-links a,
+.quick-links button{
   display:flex;
   align-items:center;
   justify-content:center;
@@ -61,29 +84,44 @@
   transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 }
 
-.quick-links a:hover{
+.quick-links a:hover,
+.quick-links button:hover{
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(87, 110, 86, 0.12);
   background: linear-gradient(180deg, #e3eee0 0%, #d9e6d6 100%);
 }
 
-.quick-links a:active{
+.quick-links a:active,
+.quick-links button:active{
   transform: translateY(0);
+}
+
+  .quick-links button{
+  width: 100%;
+  border: 1px solid #b7cbb3;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 input[type="text"]{
   width: 100%;
-  height: 48px;
-  min-height: 48px;
+  height: 52px;
+  min-height: 52px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.96);
   color: var(--text);
   border-radius: 16px;
-  padding: 0 16px;
+  padding: 0 18px;
   font-size: 1rem;
+  line-height: 52px;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+  
+  input[type="text"]::placeholder{
+  color: #a1909d;
+  line-height: 52px;
 }
 
 input[type="text"]:focus{
@@ -100,7 +138,7 @@ input[type="text"]:focus{
     url('top-floral.png');
   background-repeat: no-repeat;
   background-position: top right;
-  background-size: 180px auto;
+  background-size: 300px auto;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.65);
   box-shadow: var(--shadow);
@@ -111,6 +149,13 @@ input[type="text"]:focus{
   .hero > *{
   position: relative;
   z-index: 1;
+}
+
+  h1{
+  margin: 0 0 10px;
+  font-size: clamp(2.9rem, 8vw, 4.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
 .subtitle{
@@ -245,11 +290,11 @@ input[type="text"]:focus{
   box-shadow: none;
 }
   .popup-content img{
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
-  margin: 0;
+  margin: 0 auto;
   border-radius: 0;
   object-fit: contain;
 }
@@ -286,7 +331,7 @@ input[type="text"]:focus{
     padding: 18px 16px 16px;
     border-radius: 22px;
     margin-top: 0;
-    background-size: 130px auto;
+    background-size: 220px auto;
     background-position: top right;
   }
 
@@ -322,19 +367,32 @@ input[type="text"]:focus{
 }
 
 .popup-content{
+  position: relative;
   width: 100vw;
   height: 100svh;
   max-width: 100vw;
   max-height: 100svh;
+  margin: 0;
+  background: transparent;
   border-radius: 0;
-  padding: 0;
+  overflow: auto;
+  padding: 60px 10px 20px;
+  box-shadow: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .popup-content img{
-  width: 100vw;
-  max-width: 100vw;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
   border-radius: 0;
+  object-fit: contain;
 }
+    
 }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -355,8 +413,8 @@ input[type="text"]:focus{
       <div id="results"></div>
 
       <div class="quick-links">
-        <a href="#" onclick="openPopup('floorplanPopup')">View Floor Plan</a>
-        <a href="#" onclick="openPopup('menuPopup')">View Menu</a>
+        <button type="button" onclick="openPopup('floorplanPopup')">View Floor Plan</button>
+        <button type="button" onclick="openPopup('menuPopup')">View Menu</button>
         <a id="lenseAnchor" href="#" target="_blank" rel="noopener">Open Lense</a>
       </div>
     </section>
@@ -464,22 +522,23 @@ input[type="text"]:focus{
 
     // ===== Popups: click outside to close, sticky X stays visible =====
     function openPopup(id) {
-      const popup = document.getElementById(id);
-      popup.style.display = 'block';
+  document.getElementById(id).style.display = 'block';
+}
 
-      // Close when clicking outside popup-content
-      function handler(e) {
-        if (e.target === popup) {
-          closePopup(id);
-          popup.removeEventListener('click', handler);
-        }
-      }
-      popup.addEventListener('click', handler);
+function closePopup(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+document.querySelectorAll('.popup').forEach(popup => {
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) {
+      popup.style.display = 'none';
     }
-    function closePopup(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-    window.openPopup = openPopup; window.closePopup = closePopup;
+  });
+});
+
+window.openPopup = openPopup;
+window.closePopup = closePopup;
     function openImageViewer(src, alt) {
   const viewer = document.getElementById('imageViewer');
   const img = document.getElementById('viewerImg');
@@ -497,8 +556,15 @@ function closeImageViewer() {
   document.body.style.overflow = '';
 }
 
-document.getElementById('imageViewer').addEventListener('click', function(e){
-  if (e.target === this) closeImageViewer();
+const imageViewer = document.getElementById('imageViewer');
+const imageStage = document.querySelector('.image-stage');
+
+imageViewer.addEventListener('click', function(e){
+  if (e.target === imageViewer) closeImageViewer();
+});
+
+imageStage.addEventListener('click', function(e){
+  e.stopPropagation();
 });
   </script>
 </body>
