@@ -360,7 +360,7 @@
 
         const out = fuse.search(q);
         if (!out.length) {
-          resultsDiv.innerHTML = '<div class="entry">No match found</div>';
+          resultsDiv.innerHTML = '<div class="empty">No match found</div>';
           return;
         }
         out.slice(0,50).forEach(({ item: p }) => {
@@ -372,9 +372,10 @@
             const tableNum = p.table.replace(/[^0-9]/g,''); // keep digits if CSV has "Table 1"
             const imgName = `table${tableNum}.jpg`;
             div.innerHTML = `
-              <div>${p.displayName} — Table ${p.table}</div>
-              <img src="${imgName}" alt="Location of table ${p.table}" onerror="this.style.display='none'">
-            `;
+  <strong>${p.displayName}</strong>
+  <div class="table-label">Table ${p.table}</div>
+  <img src="${imgName}" alt="Location of table ${p.table}" onerror="this.style.display='none'">
+`;
           } else {
             div.textContent = p.displayName;
           }
