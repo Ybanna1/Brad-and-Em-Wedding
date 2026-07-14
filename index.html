@@ -134,11 +134,11 @@ input[type="text"]:focus{
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(to bottom, rgba(255,255,255,0.72), rgba(255,255,255,0.74)),
-    url('top-floral.png');
-  background-repeat: no-repeat;
-  background-position: top right;
-  background-size: 300px auto;
+  linear-gradient(to bottom, rgba(255,255,255,0.92), rgba(255,255,255,0.94)),
+  url('top-floral-2.jpg');
+background-repeat: no-repeat;
+background-position: top right;
+background-size: 210px auto;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.65);
   box-shadow: var(--shadow);
@@ -368,28 +368,25 @@ input[type="text"]:focus{
 
 .popup-content{
   position: relative;
-  width: 100vw;
-  height: 100svh;
-  max-width: 100vw;
-  max-height: 100svh;
+  width: 100%;
+  height: 100%;
   margin: 0;
   background: transparent;
-  border-radius: 0;
   overflow: auto;
-  padding: 60px 10px 20px;
-  box-shadow: none;
+  padding: 72px 14px 24px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
 }
-
+    
 .popup-content img{
   width: auto;
-  max-width: 100%;
+  max-width: calc(100vw - 28px);
+  max-height: calc(100svh - 96px);
   height: auto;
   display: block;
   margin: 0 auto;
-  border-radius: 0;
+  border-radius: 12px;
   object-fit: contain;
 }
     
@@ -530,10 +527,14 @@ function closePopup(id) {
 }
 
 document.querySelectorAll('.popup').forEach(popup => {
-  popup.addEventListener('click', function(e) {
-    if (e.target === popup) {
-      popup.style.display = 'none';
-    }
+  const content = popup.querySelector('.popup-content');
+
+  popup.addEventListener('click', function() {
+    popup.style.display = 'none';
+  });
+
+  content.addEventListener('click', function(e) {
+    e.stopPropagation();
   });
 });
 
