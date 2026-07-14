@@ -93,13 +93,24 @@ input[type="text"]:focus{
 }
 
 .hero{
-  background: rgba(255,255,255,0.74);
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.72), rgba(255,255,255,0.74)),
+    url('top-floral.png');
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 180px auto;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.65);
   box-shadow: var(--shadow);
   border-radius: 28px;
   padding: 22px 18px 18px;
   margin-top: 6px;
+}
+  .hero > *{
+  position: relative;
+  z-index: 1;
 }
 
 .subtitle{
@@ -275,6 +286,8 @@ input[type="text"]:focus{
     padding: 18px 16px 16px;
     border-radius: 22px;
     margin-top: 0;
+    background-size: 130px auto;
+    background-position: top right;
   }
 
   .eyebrow{
