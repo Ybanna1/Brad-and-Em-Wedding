@@ -211,54 +211,55 @@ input[type="text"]:focus{
 }
 
   .popup{
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    inset: 0;
-    padding: 8px;
-    background: rgba(34, 24, 30, 0.58);
-    backdrop-filter: blur(4px);
-  }
-
-  ..popup-content{
-  position: relative;
-  width: calc(100vw - 16px);
-  max-width: 980px;
-  max-height: calc(100svh - 16px);
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 22px;
-  overflow: auto;
-  padding: 8px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.20);
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  padding: 0;
+  background: rgba(34, 24, 30, 0.58);
+  backdrop-filter: blur(4px);
 }
 
+  .popup-content{
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  max-width: 100vw;
+  max-height: 100svh;
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  overflow: auto;
+  padding: 0;
+  box-shadow: none;
+}
   .popup-content img{
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   height: auto;
-  border-radius: 16px;
   display: block;
-  margin: 0 auto;
+  margin: 0;
+  border-radius: 0;
+  object-fit: contain;
 }
 
   .close{
-  position: sticky;
-  top: 6px;
-  margin-left: auto;
+  position: fixed;
+  top: 14px;
+  right: 14px;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   border: 0;
   border-radius: 999px;
   background: rgba(255,255,255,0.96);
   color: var(--text);
-  font-size: 24px;
+  font-size: 28px;
   line-height: 1;
   cursor: pointer;
-  z-index: 2;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.10);
+  z-index: 1001;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.14);
 }
 
   @media (max-width: 640px){
@@ -304,19 +305,23 @@ input[type="text"]:focus{
   }
 
   .popup{
-    padding: 4px;
-  }
+  padding: 0;
+}
 
-  .popup-content{
-    width: calc(100vw - 8px);
-    max-height: calc(100svh - 8px);
-    border-radius: 18px;
-    padding: 6px;
-  }
+.popup-content{
+  width: 100vw;
+  height: 100svh;
+  max-width: 100vw;
+  max-height: 100svh;
+  border-radius: 0;
+  padding: 0;
+}
 
-  .popup-content img{
-    border-radius: 12px;
-  }
+.popup-content img{
+  width: 100vw;
+  max-width: 100vw;
+  border-radius: 0;
+}
 }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
