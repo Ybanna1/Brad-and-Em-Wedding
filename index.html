@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>Find Your Seat</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 <style>
@@ -159,6 +159,57 @@ input[type="text"]:focus{
     text-align: center;
   }
 
+  .image-viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  background: rgba(20, 16, 18, 0.92);
+  backdrop-filter: blur(4px);
+  padding: 8px;
+}
+
+.image-viewer.open{
+  display:block;
+}
+
+.image-stage{
+  width:100%;
+  height:100%;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pinch-zoom;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+.image-stage img{
+  display:block;
+  width:auto;
+  max-width:none;
+  height:auto;
+  min-width:100%;
+  border-radius: 14px;
+  margin:auto;
+}
+
+.viewer-close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:999px;
+  background: rgba(255,255,255,0.94);
+  color:#2f2430;
+  font-size:28px;
+  line-height:1;
+  z-index:2001;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+}
+
   .popup{
     display: none;
     position: fixed;
@@ -309,6 +360,13 @@ input[type="text"]:focus{
     </div>
   </div>
 
+  <div id="imageViewer" class="image-viewer" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="viewer-close" onclick="closeImageViewer()" aria-label="Close image viewer">&times;</button>
+  <div class="image-stage">
+    <img id="viewerImg" src="" alt="">
+  </div>
+</div>
+  
   <script>
     // ===== Load people from CSV in your GitHub repo =====
     const CSV_URL = "https://raw.githubusercontent.com/Ybanna1/Wedding-seating-test/main/floorplan.csv";
@@ -373,10 +431,10 @@ input[type="text"]:focus{
             const tableNum = p.table.replace(/[^0-9]/g,''); // keep digits if CSV has "Table 1"
             const imgName = `table${tableNum}.jpg`;
             div.innerHTML = `
-  <strong>${p.displayName}</strong>
-  <div class="table-label">Table ${p.table}</div>
-  <img src="${imgName}" alt="Location of table ${p.table}" onerror="this.style.display='none'">
-`;
+            <strong>${p.displayName}</strong>
+            <div class="table-label">Table ${p.table}</div>
+            <img src="${imgName}" alt="Location of table ${p.table}" onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')" onerror="this.style.display='none'">
+          `;
           } else {
             div.textContent = p.displayName;
           }
@@ -404,6 +462,26 @@ input[type="text"]:focus{
       document.getElementById(id).style.display = 'none';
     }
     window.openPopup = openPopup; window.closePopup = closePopup;
+    function openImageViewer(src, alt) {
+  const viewer = document.getElementById('imageViewer');
+  const img = document.getElementById('viewerImg');
+  img.src = src;
+  img.alt = alt || '';
+  viewer.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeImageViewer() {
+  const viewer = document.getElementById('imageViewer');
+  const img = document.getElementById('viewerImg');
+  viewer.classList.remove('open');
+  img.src = '';
+  document.body.style.overflow = '';
+}
+
+document.getElementById('imageViewer').addEventListener('click', function(e){
+  if (e.target === this) closeImageViewer();
+});
   </script>
 </body>
 </html>
