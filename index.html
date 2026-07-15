@@ -64,10 +64,6 @@ body{
   gap: 10px;
   margin-top: 14px;
 }
-  
-  .quick-links.is-hidden{
-  display: none;
-}
 
 .quick-links a,
 .quick-links button{
@@ -358,14 +354,20 @@ background-size: cover;
     max-width: 100%;
   }
 
+body.keyboard-open .hero{
+  padding-bottom: 96px;
+}
+    
 body.keyboard-open .quick-links{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  position: sticky;
-  bottom: 8px;
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
   z-index: 35;
-  margin-top: 12px;
+  margin-top: 0;
   padding: 8px;
   background: rgba(252,250,247,0.96);
   backdrop-filter: blur(10px);
@@ -564,45 +566,48 @@ body.keyboard-open #results{
 const fuse = new Fuse(people, { keys: ["name", "displayName"], threshold: 0.3, ignoreLocation: true });
 const searchEl = document.getElementById("search");
 const resultsDiv = document.getElementById("results");
-const quickLinks = document.getElementById("quickLinks");
+
+      searchEl.addEventListener("focus", () => {
+  document.body.classList.add("keyboard-open");
+});
+
+searchEl.addEventListener("blur", () => {
+  setTimeout(() => {
+    document.body.classList.remove("keyboard-open");
+  }, 150);
+});
 
 searchEl.addEventListener("input", function(){
   const q = this.value.trim();
   resultsDiv.innerHTML = "";
 
-  document.body.classList.toggle("keyboard-open", q.length > 0);
-
   if (!q) return;
 
-        const out = fuse.search(q);
-        if (!out.length) {
-          resultsDiv.innerHTML = '<div class="empty">No match found</div>';
-          return;
-        }
-        out.slice(0,50).forEach(({ item: p }) => {
-          const div = document.createElement("div");
-          div.className = "entry";
+  const out = fuse.search(q);
+  if (!out.length) {
+    resultsDiv.innerHTML = '<div class="empty">No match found</div>';
+    return;
+  }
 
-          // Build result HTML. If table exists, also show tableX.jpg (hide if missing).
-          if (p.table) {
-            const tableNum = p.table.replace(/[^0-9]/g,''); // keep digits if CSV has "Table 1"
-            const imgName = `table${tableNum}.jpg`;
-            div.innerHTML = `
-              <strong>${p.displayName}</strong>
-              <div class="table-label">Table ${p.table}</div>
-              <button type="button" class="result-view-btn" onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')">View table image</button>
-              `;
-          } else {
-            div.textContent = p.displayName;
-          }
+  out.slice(0,50).forEach(({ item: p }) => {
+    const div = document.createElement("div");
+    div.className = "entry";
 
-          resultsDiv.appendChild(div);
+    if (p.table) {
+      const tableNum = p.table.replace(/[^0-9]/g,'');
+      const imgName = `table${tableNum}.jpg`;
+      div.innerHTML = `
+        <strong>${p.displayName}</strong>
+        <div class="table-label">Table ${p.table}</div>
+        <button type="button" class="result-view-btn" onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')">View table image</button>
+      `;
+    } else {
+      div.textContent = p.displayName;
+    }
 
-          setTimeout(() => {
-  resultsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
-}, 80);
-        });
-      });
+    resultsDiv.appendChild(div);
+  });
+});
     })();
 
     // ===== Popups: click outside to close, sticky X stays visible =====
