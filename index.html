@@ -64,6 +64,10 @@ body{
   gap: 10px;
   margin-top: 14px;
 }
+  
+  .quick-links.is-hidden{
+  display: none;
+}
 
 .quick-links a,
 .quick-links button{
@@ -354,6 +358,18 @@ background-size: cover;
     max-width: 100%;
   }
 
+body.keyboard-open .quick-links{
+  display: none;
+}
+
+body.keyboard-open .hero{
+  min-height: auto;
+}
+
+body.keyboard-open #results{
+  max-height: 48svh;
+}
+    
   .hero{
     padding: 18px 16px 18px;
     border-radius: 22px;
@@ -453,11 +469,11 @@ background-size: cover;
 
       <div id="results"></div>
 
-      <div class="quick-links">
-        <button type="button" onclick="openPopup('floorplanPopup')">View Floor Plan</button>
-        <button type="button" onclick="openPopup('menuPopup')">View Menu</button>
-        <a id="lenseAnchor" href="#" target="_blank" rel="noopener">Open Lense</a>
-      </div>
+<div class="quick-links" id="quickLinks">
+  <button type="button" onclick="openPopup('floorplanPopup')">View Floor Plan</button>
+  <button type="button" onclick="openPopup('menuPopup')">View Menu</button>
+  <a id="lenseAnchor" href="#" target="_blank" rel="noopener">Open Lense</a>
+</div>
     </section>
   </div>
 
@@ -525,14 +541,18 @@ background-size: cover;
       let people = [];
       try { people = await loadPeopleFromCSV(); } catch { people = []; }
 
-      const fuse = new Fuse(people, { keys: ["name", "displayName"], threshold: 0.3, ignoreLocation: true });
-      const searchEl = document.getElementById("search");
-      const resultsDiv = document.getElementById("results");
+const fuse = new Fuse(people, { keys: ["name", "displayName"], threshold: 0.3, ignoreLocation: true });
+const searchEl = document.getElementById("search");
+const resultsDiv = document.getElementById("results");
+const quickLinks = document.getElementById("quickLinks");
 
-      searchEl.addEventListener("input", function(){
-        const q = this.value.trim();
-        resultsDiv.innerHTML = "";
-        if (!q) return;
+searchEl.addEventListener("input", function(){
+  const q = this.value.trim();
+  resultsDiv.innerHTML = "";
+
+  document.body.classList.toggle("keyboard-open", q.length > 0);
+
+  if (!q) return;
 
         const out = fuse.search(q);
         if (!out.length) {
@@ -557,6 +577,10 @@ background-size: cover;
           }
 
           resultsDiv.appendChild(div);
+
+          setTimeout(() => {
+  resultsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+}, 80);
         });
       });
     })();
