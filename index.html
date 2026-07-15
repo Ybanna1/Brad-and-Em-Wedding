@@ -134,11 +134,11 @@ input[type="text"]:focus{
   position: relative;
   overflow: hidden;
   background:
-  linear-gradient(to bottom, rgba(255,255,255,0.92), rgba(255,255,255,0.94)),
-  url('top-floral-2.jpg');
+  linear-gradient(to bottom, rgba(255,255,255,0.94), rgba(255,255,255,0.96)),
+  url('top-floral-2.png');
 background-repeat: no-repeat;
-background-position: top right;
-background-size: 210px auto;
+background-position: right top;
+background-size: cover;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.65);
   box-shadow: var(--shadow);
@@ -331,8 +331,8 @@ background-size: 210px auto;
     padding: 18px 16px 16px;
     border-radius: 22px;
     margin-top: 0;
-    background-size: 220px auto;
-    background-position: top right;
+    background-size: cover;
+    background-position: right top;
   }
 
   .eyebrow{
@@ -420,7 +420,7 @@ background-size: 210px auto;
   <!-- Floorplan Popup -->
   <div id="floorplanPopup" class="popup" role="dialog" aria-modal="true" aria-label="Floor plan">
     <div class="popup-content">
-      <span class="close" onclick="closePopup('floorplanPopup')" aria-label="Close">&times;</span>
+      <button type="button" class="close" onclick="closePopup('floorplanPopup'); event.stopPropagation();" aria-label="Close">&times;</button>
       <img id="floorImg" src="floorplan.jpg" alt="Floor Plan" loading="lazy">
     </div>
   </div>
@@ -428,7 +428,7 @@ background-size: 210px auto;
   <!-- Menu Popup -->
   <div id="menuPopup" class="popup" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="popup-content">
-      <span class="close" onclick="closePopup('menuPopup')" aria-label="Close">&times;</span>
+      <button type="button" class="close" onclick="closePopup('menuPopup'); event.stopPropagation();" aria-label="Close">&times;</button>
       <img id="menuImg" src="menu.jpg" alt="Menu" loading="lazy">
     </div>
   </div>
@@ -528,14 +528,25 @@ function closePopup(id) {
 
 document.querySelectorAll('.popup').forEach(popup => {
   const content = popup.querySelector('.popup-content');
+  const img = popup.querySelector('img');
 
   popup.addEventListener('click', function() {
-    popup.style.display = 'none';
+    closePopup(popup.id);
   });
 
   content.addEventListener('click', function(e) {
+    if (e.target === content) {
+      closePopup(popup.id);
+      return;
+    }
     e.stopPropagation();
   });
+
+  if (img) {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
 });
 
 window.openPopup = openPopup;
@@ -559,12 +570,21 @@ function closeImageViewer() {
 
 const imageViewer = document.getElementById('imageViewer');
 const imageStage = document.querySelector('.image-stage');
+const viewerImg = document.getElementById('viewerImg');
 
-imageViewer.addEventListener('click', function(e){
-  if (e.target === imageViewer) closeImageViewer();
+imageViewer.addEventListener('click', function() {
+  closeImageViewer();
 });
 
 imageStage.addEventListener('click', function(e){
+  if (e.target === imageStage) {
+    closeImageViewer();
+    return;
+  }
+  e.stopPropagation();
+});
+
+viewerImg.addEventListener('click', function(e){
   e.stopPropagation();
 });
   </script>
