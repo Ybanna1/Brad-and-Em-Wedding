@@ -336,11 +336,13 @@ background-size: cover;
     min-height: 78svh;
   }
 
-  .eyebrow{
-    margin-bottom: 8px;
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-  }
+.hero-logo{
+  display: block;
+  width: auto;
+  max-width: 150px;
+  height: auto;
+  margin: 0 0 10px;
+}
 
   h1{
     font-size: clamp(2.5rem, 8.5vw, 3.4rem);
@@ -399,7 +401,7 @@ background-size: cover;
 <body>
   <div class="page">
     <section class="hero">
-      <div class="eyebrow">Brad &amp; Em</div>
+      <img src="logo.png" alt="Brad and Em" class="hero-logo">
       <h1>Find Your Seat</h1>
       <p class="subtitle">Search your name to find your table, then view the floor plan or menu.</p>
       
