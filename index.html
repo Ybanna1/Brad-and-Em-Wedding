@@ -359,7 +359,27 @@ background-size: cover;
   }
 
 body.keyboard-open .quick-links{
-  display: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  position: sticky;
+  bottom: 8px;
+  z-index: 35;
+  margin-top: 12px;
+  padding: 8px;
+  background: rgba(252,250,247,0.96);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(120, 95, 115, 0.10);
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(78, 52, 71, 0.10);
+}
+
+    body.keyboard-open .quick-links a,
+body.keyboard-open .quick-links button{
+  min-height: 40px;
+  padding: 10px 8px;
+  font-size: 0.82rem;
+  border-radius: 12px;
 }
 
 body.keyboard-open .hero{
@@ -367,7 +387,7 @@ body.keyboard-open .hero{
 }
 
 body.keyboard-open #results{
-  max-height: 48svh;
+  max-height: 40svh;
 }
     
   .hero{
@@ -470,9 +490,9 @@ body.keyboard-open #results{
       <div id="results"></div>
 
 <div class="quick-links" id="quickLinks">
-  <button type="button" onclick="openPopup('floorplanPopup')">View Floor Plan</button>
-  <button type="button" onclick="openPopup('menuPopup')">View Menu</button>
-  <a id="lenseAnchor" href="#" target="_blank" rel="noopener">Open Lense</a>
+<button type="button" onclick="openPopup('floorplanPopup')">Floor Plan</button>
+<button type="button" onclick="openPopup('menuPopup')">Menu</button>
+<a id="lenseAnchor" href="#" target="_blank" rel="noopener">Lense</a>
 </div>
     </section>
   </div>
