@@ -176,13 +176,19 @@ background-size: cover;
 
 .search-wrap {
   margin-top: 14px;
+  position: sticky;
+  top: 10px;
+  z-index: 20;
+  padding-bottom: 10px;
+  background: linear-gradient(to bottom, rgba(252,250,247,0.96), rgba(252,250,247,0.88));
+  backdrop-filter: blur(8px);
 }
 
-  #results {
-    margin-top: 18px;
-    display: grid;
-    gap: 14px;
-  }
+#results {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
 
   .entry {
     background: var(--card-strong);
@@ -213,6 +219,19 @@ background-size: cover;
     margin-top: 6px;
     border: 1px solid rgba(120, 95, 115, 0.12);
   }
+
+  .result-view-btn{
+  margin-top: 10px;
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #b7cbb3;
+  border-radius: 12px;
+  background: #eef5eb;
+  color: #314233;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
 
   .empty {
     background: rgba(255,255,255,0.7);
@@ -364,9 +383,23 @@ background-size: cover;
     max-width: 100%;
   }
 
-  .search-wrap{
-    margin-top: 10px;
-  }
+.search-wrap{
+  margin-top: 10px;
+  position: sticky;
+  top: 8px;
+  z-index: 30;
+  padding-bottom: 8px;
+  background: linear-gradient(to bottom, rgba(252,250,247,0.98), rgba(252,250,247,0.92));
+  backdrop-filter: blur(8px);
+}
+
+    #results{
+  margin-top: 12px;
+  max-height: 34svh;
+  overflow-y: auto;
+  padding-right: 4px;
+  -webkit-overflow-scrolling: touch;
+}
 
   .quick-links{
     gap: 8px;
@@ -515,10 +548,10 @@ background-size: cover;
             const tableNum = p.table.replace(/[^0-9]/g,''); // keep digits if CSV has "Table 1"
             const imgName = `table${tableNum}.jpg`;
             div.innerHTML = `
-            <strong>${p.displayName}</strong>
-            <div class="table-label">Table ${p.table}</div>
-            <img src="${imgName}" alt="Location of table ${p.table}" onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')" onerror="this.style.display='none'">
-          `;
+              <strong>${p.displayName}</strong>
+              <div class="table-label">Table ${p.table}</div>
+              <button type="button" class="result-view-btn" onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')">View table image</button>
+              `;
           } else {
             div.textContent = p.displayName;
           }
