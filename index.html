@@ -5,475 +5,430 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>Find Your Seat</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-<style>
-  *{
-  box-sizing: border-box;
-}
+  <style>
+    *{
+      box-sizing: border-box;
+    }
 
-html, body{
-  margin: 0;
-  padding: 0;
-}
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
 
-body{
-  min-height: 100vh;
-  font-family: Georgia, serif;
-  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
-  color: var(--text);
-}
+    body{
+      min-height: 100vh;
+      font-family: Georgia, serif;
+      background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+      color: var(--text);
+    }
 
-:root{
-  --bg: #f7f4f1;
-  --bg-soft: #fcfaf7;
-  --card: rgba(255,255,255,0.78);
-  --card-strong: #ffffff;
-  --text: #2f2430;
-  --muted: #7f7180;
-  --border: rgba(120, 95, 115, 0.16);
+    :root{
+      --bg: #f7f4f1;
+      --bg-soft: #fcfaf7;
+      --card: rgba(255,255,255,0.78);
+      --card-strong: #ffffff;
+      --text: #2f2430;
+      --muted: #7f7180;
+      --border: rgba(120, 95, 115, 0.16);
 
-  --sage: #dce8da;
-  --sage-strong: #cddfc9;
-  --sage-border: #b7cbb3;
-  --sage-text: #314233;
+      --sage: #dce8da;
+      --sage-strong: #cddfc9;
+      --sage-border: #b7cbb3;
+      --sage-text: #314233;
 
-  --shadow: 0 20px 45px rgba(78, 52, 71, 0.10);
-  --shadow-soft: 0 10px 25px rgba(78, 52, 71, 0.08);
-  --radius: 22px;
-  --radius-sm: 14px;
-  --max: 760px;
-}
+      --shadow: 0 20px 45px rgba(78, 52, 71, 0.10);
+      --shadow-soft: 0 10px 25px rgba(78, 52, 71, 0.08);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --max: 760px;
+    }
 
-  .page{
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-}
+    .page{
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
 
-.search-label{
-  display:block;
-  text-align:left;
-  margin: 0 0 8px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--muted);
-}
+    .search-label{
+      display:block;
+      text-align:left;
+      margin: 0 0 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
 
-.quick-links{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
+    .quick-links{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
 
-.quick-links a,
-.quick-links button{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height: 48px;
-  padding: 12px 16px;
-  text-decoration:none;
-  color: #314233;
-  background: linear-gradient(180deg, #dce8da 0%, #d3e1d0 100%);
-  border: 1px solid #b7cbb3;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 0.98rem;
-  letter-spacing: 0.01em;
-  box-shadow: 0 8px 18px rgba(87, 110, 86, 0.10);
-  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
-}
+    .quick-links a,
+    .quick-links button{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 48px;
+      padding: 12px 16px;
+      text-decoration:none;
+      color: #314233;
+      background: linear-gradient(180deg, #dce8da 0%, #d3e1d0 100%);
+      border: 1px solid #b7cbb3;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      box-shadow: 0 8px 18px rgba(87, 110, 86, 0.10);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
 
-.quick-links a:hover,
-.quick-links button:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(87, 110, 86, 0.12);
-  background: linear-gradient(180deg, #e3eee0 0%, #d9e6d6 100%);
-}
+    .quick-links a:hover,
+    .quick-links button:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(87, 110, 86, 0.12);
+      background: linear-gradient(180deg, #e3eee0 0%, #d9e6d6 100%);
+    }
 
-.quick-links a:active,
-.quick-links button:active{
-  transform: translateY(0);
-}
+    .quick-links a:active,
+    .quick-links button:active{
+      transform: translateY(0);
+    }
 
-  .quick-links button{
-  width: 100%;
-  border: 1px solid #b7cbb3;
-  cursor: pointer;
-  font-family: inherit;
-}
+    .quick-links button{
+      width: 100%;
+      border: 1px solid #b7cbb3;
+      cursor: pointer;
+      font-family: inherit;
+    }
 
-input[type="text"]{
-  width: 100%;
-  height: 52px;
-  min-height: 52px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.96);
-  color: var(--text);
-  border-radius: 16px;
-  padding: 0 18px;
-  font-size: 1rem;
-  line-height: 52px;
-  outline: none;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-}
-  
-  input[type="text"]::placeholder{
-  color: #a1909d;
-  line-height: 52px;
-}
+    input[type="text"]{
+      width: 100%;
+      height: 52px;
+      min-height: 52px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.96);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 0 18px;
+      font-size: 1rem;
+      line-height: 52px;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
 
-input[type="text"]:focus{
-  border-color: #aac1a7;
-  box-shadow: 0 0 0 4px rgba(189, 212, 184, 0.22);
-  transform: translateY(-1px);
-}
+    input[type="text"]::placeholder{
+      color: #a1909d;
+      line-height: 52px;
+    }
 
-.hero{
-  position: relative;
-  overflow: hidden;
-  background:
-  linear-gradient(to bottom, rgba(255,255,255,0.94), rgba(255,255,255,0.96)),
-  url('top-floral.png');
-background-repeat: no-repeat;
-background-position: right top;
-background-size: cover;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.65);
-  box-shadow: var(--shadow);
-  border-radius: 28px;
-  padding: 22px 18px 18px;
-  margin-top: 6px;
-}
-  .hero > *{
-  position: relative;
-  z-index: 1;
-}
-  
-  .hero-logo{
-  display: block;
-  width: auto;
-  max-width: 110px;
-  height: auto;
-  margin: 0 auto 14px;
-}
+    input[type="text"]:focus{
+      border-color: #aac1a7;
+      box-shadow: 0 0 0 4px rgba(189, 212, 184, 0.22);
+      transform: translateY(-1px);
+    }
 
-  h1{
-  margin: 0 0 10px;
-  font-size: clamp(2.9rem, 8vw, 4.4rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-}
+    .hero{
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.94), rgba(255,255,255,0.96)),
+        url('top-floral.png');
+      background-repeat: no-repeat;
+      background-position: right top;
+      background-size: cover;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+      padding: 22px 18px 18px;
+      margin-top: 6px;
+    }
 
-.subtitle{
-  margin: 0 0 16px;
-  max-width: 22ch;
-  color: var(--muted);
-  font-size: 0.98rem;
-  line-height: 1.5;
-}
+    .hero > *{
+      position: relative;
+      z-index: 1;
+    }
 
-.search-wrap {
-  margin-top: 14px;
-  position: sticky;
-  top: 10px;
-  z-index: 20;
-  padding-bottom: 10px;
-  background: linear-gradient(to bottom, rgba(252,250,247,0.96), rgba(252,250,247,0.88));
-  backdrop-filter: blur(8px);
-}
+    .hero-logo{
+      display: block;
+      width: auto;
+      max-width: 110px;
+      height: auto;
+      margin: 0 auto 14px;
+    }
 
-#results {
-  margin-top: 16px;
-  display: grid;
-  gap: 12px;
-}
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(2.9rem, 8vw, 4.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
 
-  .entry {
-    background: var(--card-strong);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 16px;
-    box-shadow: var(--shadow-soft);
-    text-align: left;
-    overflow: hidden;
-  }
+    .subtitle{
+      margin: 0 0 16px;
+      max-width: 22ch;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
 
-  .entry strong {
-    display: block;
-    font-size: 1.05rem;
-    margin-bottom: 6px;
-  }
-
-  .entry .table-label {
-    color: var(--muted);
-    font-size: 0.96rem;
-    margin-bottom: 12px;
-  }
-
-  .entry img {
-    width: 100%;
-    border-radius: 14px;
-    display: block;
-    margin-top: 6px;
-    border: 1px solid rgba(120, 95, 115, 0.12);
-  }
-
-  .result-view-btn{
-  margin-top: 10px;
-  width: 100%;
-  min-height: 42px;
-  border: 1px solid #b7cbb3;
-  border-radius: 12px;
-  background: #eef5eb;
-  color: #314233;
-  font-weight: 700;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-  .empty {
-    background: rgba(255,255,255,0.7);
-    border: 1px dashed var(--border);
-    color: var(--muted);
-    border-radius: 18px;
-    padding: 18px;
-    text-align: center;
-  }
-
-  .image-viewer{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:2000;
-  background: rgba(20, 16, 18, 0.92);
-  backdrop-filter: blur(4px);
-  padding: 8px;
-}
-
-.image-viewer.open{
-  display:block;
-}
-
-.image-stage{
-  width:100%;
-  height:100%;
-  overflow:auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pinch-zoom;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-}
-
-.image-stage img{
-  display:block;
-  width:auto;
-  max-width:none;
-  height:auto;
-  min-width:100%;
-  border-radius: 14px;
-  margin:auto;
-}
-
-.viewer-close{
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:44px;
-  height:44px;
-  border:none;
-  border-radius:999px;
-  background: rgba(255,255,255,0.94);
-  color:#2f2430;
-  font-size:28px;
-  line-height:1;
-  z-index:2001;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.18);
-}
-
-  .popup{
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  inset: 0;
-  padding: 0;
-  background: rgba(34, 24, 30, 0.58);
-  backdrop-filter: blur(4px);
-}
-
-  .popup-content{
-  position: relative;
-  width: 100vw;
-  height: 100svh;
-  max-width: 100vw;
-  max-height: 100svh;
-  margin: 0;
-  background: transparent;
-  border-radius: 0;
-  overflow: auto;
-  padding: 0;
-  box-shadow: none;
-}
-  .popup-content img{
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  border-radius: 0;
-  object-fit: contain;
-}
-
-  .close{
-  position: fixed;
-  top: 14px;
-  right: 14px;
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.96);
-  color: var(--text);
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  z-index: 1001;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.14);
-}
-
-  @media (max-width: 640px){
-  body{
-    padding: 12px 12px 12px;
-  }
-
-  .page{
-    max-width: 100%;
-  }
-
-body.keyboard-open .hero{
-  padding-bottom: 96px;
-}
-    
-body.keyboard-open .quick-links{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  position: fixed;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  z-index: 35;
-  margin-top: 0;
-  padding: 8px;
-  background: rgba(252,250,247,0.96);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(120, 95, 115, 0.10);
-  border-radius: 16px;
-  box-shadow: 0 10px 22px rgba(78, 52, 71, 0.10);
-}
-
-    body.keyboard-open .quick-links a,
-body.keyboard-open .quick-links button{
-  min-height: 40px;
-  padding: 10px 8px;
-  font-size: 0.82rem;
-  border-radius: 12px;
-}
-
-body.keyboard-open .hero{
-  min-height: auto;
-}
-
-body.keyboard-open #results{
-  max-height: 40svh;
-}
-    
-  .hero{
-    padding: 18px 16px 18px;
-    border-radius: 22px;
-    margin-top: 0;
-    background-size: cover;
-    background-position: right top;
-    min-height: 78svh;
-  }
-
-.hero-logo{
-  display: block;
-  width: auto;
-  max-width: 92px;
-  height: auto;
-  margin: 0 auto 14px;
-}
-
-  h1{
-    font-size: clamp(2.5rem, 8.5vw, 3.4rem);
-    margin-bottom: 8px;
-  }
-
-  .subtitle{
-    font-size: 0.95rem;
-    line-height: 1.45;
-    margin-bottom: 14px;
-    max-width: 100%;
-  }
-
-.search-wrap{
-  margin-top: 10px;
-  position: sticky;
-  top: 8px;
-  z-index: 30;
-  padding-bottom: 8px;
-  background: linear-gradient(to bottom, rgba(252,250,247,0.98), rgba(252,250,247,0.92));
-  backdrop-filter: blur(8px);
-}
+    .search-wrap{
+      margin-top: 14px;
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      padding-bottom: 10px;
+      background: linear-gradient(to bottom, rgba(252,250,247,0.96), rgba(252,250,247,0.88));
+      backdrop-filter: blur(8px);
+    }
 
     #results{
-  margin-top: 12px;
-  max-height: 34svh;
-  overflow-y: auto;
-  padding-right: 4px;
-  -webkit-overflow-scrolling: touch;
-}
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
 
-  .quick-links{
-    gap: 8px;
-    margin-top: 12px;
-  }
+    .entry{
+      background: var(--card-strong);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      text-align: left;
+      overflow: hidden;
+    }
 
-  .popup{
-  padding: 0;
-}
+    .entry strong{
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
 
-.popup-content{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  background: transparent;
-  overflow: auto;
-  padding: 72px 14px 24px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-    
-.popup-content img{
-  width: auto;
-  max-width: calc(100vw - 28px);
-  max-height: calc(100svh - 96px);
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  border-radius: 12px;
-  object-fit: contain;
-}
-    
-}
-</style>
+    .entry .table-label{
+      color: var(--muted);
+      font-size: 0.96rem;
+      margin-bottom: 12px;
+    }
+
+    .entry img{
+      width: 100%;
+      border-radius: 14px;
+      display: block;
+      margin-top: 6px;
+      border: 1px solid rgba(120, 95, 115, 0.12);
+      cursor: pointer;
+    }
+
+    .empty{
+      background: rgba(255,255,255,0.7);
+      border: 1px dashed var(--border);
+      color: var(--muted);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .image-viewer{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:2000;
+      background: rgba(20, 16, 18, 0.92);
+      backdrop-filter: blur(4px);
+      padding: 8px;
+    }
+
+    .image-viewer.open{
+      display:block;
+    }
+
+    .image-stage{
+      width:100%;
+      height:100%;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pinch-zoom;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    .image-stage img{
+      display:block;
+      width:auto;
+      max-width:none;
+      height:auto;
+      min-width:100%;
+      border-radius: 14px;
+      margin:auto;
+    }
+
+    .viewer-close{
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:44px;
+      height:44px;
+      border:none;
+      border-radius:999px;
+      background: rgba(255,255,255,0.94);
+      color:#2f2430;
+      font-size:28px;
+      line-height:1;
+      z-index:2001;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .popup{
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      padding: 0;
+      background: rgba(34, 24, 30, 0.58);
+      backdrop-filter: blur(4px);
+    }
+
+    .popup-content{
+      position: relative;
+      width: 100vw;
+      height: 100svh;
+      max-width: 100vw;
+      max-height: 100svh;
+      margin: 0;
+      background: transparent;
+      border-radius: 0;
+      overflow: auto;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .popup-content img{
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 0;
+      object-fit: contain;
+    }
+
+    .close{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.96);
+      color: var(--text);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+    }
+
+    @media (max-width: 640px){
+      body{
+        padding: 12px 12px 12px;
+      }
+
+      .page{
+        max-width: 100%;
+      }
+
+      body.keyboard-open .hero{
+        min-height: auto;
+      }
+
+      .hero{
+        padding: 18px 16px 18px;
+        border-radius: 22px;
+        margin-top: 0;
+        background-size: cover;
+        background-position: right top;
+        min-height: 78svh;
+      }
+
+      .hero-logo{
+        display: block;
+        width: auto;
+        max-width: 92px;
+        height: auto;
+        margin: 0 auto 14px;
+      }
+
+      h1{
+        font-size: clamp(2.5rem, 8.5vw, 3.4rem);
+        margin-bottom: 8px;
+      }
+
+      .subtitle{
+        font-size: 0.95rem;
+        line-height: 1.45;
+        margin-bottom: 14px;
+        max-width: 100%;
+      }
+
+      .search-wrap{
+        margin-top: 10px;
+        position: sticky;
+        top: 8px;
+        z-index: 30;
+        padding-bottom: 8px;
+        background: linear-gradient(to bottom, rgba(252,250,247,0.98), rgba(252,250,247,0.92));
+        backdrop-filter: blur(8px);
+      }
+
+      #results{
+        margin-top: 12px;
+        max-height: 48svh;
+        overflow-y: auto;
+        padding-right: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .quick-links{
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .popup{
+        padding: 0;
+      }
+
+      .popup-content{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: transparent;
+        overflow: auto;
+        padding: 72px 14px 24px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .popup-content img{
+        width: auto;
+        max-width: calc(100vw - 28px);
+        max-height: calc(100svh - 96px);
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 12px;
+        object-fit: contain;
+      }
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 </head>
@@ -483,7 +438,7 @@ body.keyboard-open #results{
       <img src="logo.png" alt="Brad and Em" class="hero-logo">
       <h1>Find Your Seat</h1>
       <p class="subtitle">Search your name to find your table, then view the floor plan or menu.</p>
-      
+
       <div class="search-wrap">
         <label for="search" class="search-label">Guest name</label>
         <input type="text" id="search" placeholder="Enter your name..." aria-label="Search names" />
@@ -491,15 +446,14 @@ body.keyboard-open #results{
 
       <div id="results"></div>
 
-<div class="quick-links" id="quickLinks">
-<button type="button" onclick="openPopup('floorplanPopup')">Floor Plan</button>
-<button type="button" onclick="openPopup('menuPopup')">Menu</button>
-<a id="lenseAnchor" href="#" target="_blank" rel="noopener">Lense</a>
-</div>
+      <div class="quick-links" id="quickLinks">
+        <button type="button" onclick="openPopup('floorplanPopup')">Floor Plan</button>
+        <button type="button" onclick="openPopup('menuPopup')">Menu</button>
+        <a id="lenseAnchor" href="#" target="_blank" rel="noopener">Lense</a>
+      </div>
     </section>
   </div>
 
-  <!-- Floorplan Popup -->
   <div id="floorplanPopup" class="popup" role="dialog" aria-modal="true" aria-label="Floor plan">
     <div class="popup-content">
       <button type="button" class="close" onclick="closePopup('floorplanPopup'); event.stopPropagation();" aria-label="Close">&times;</button>
@@ -507,7 +461,6 @@ body.keyboard-open #results{
     </div>
   </div>
 
-  <!-- Menu Popup -->
   <div id="menuPopup" class="popup" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="popup-content">
       <button type="button" class="close" onclick="closePopup('menuPopup'); event.stopPropagation();" aria-label="Close">&times;</button>
@@ -516,14 +469,13 @@ body.keyboard-open #results{
   </div>
 
   <div id="imageViewer" class="image-viewer" role="dialog" aria-modal="true" aria-label="Image viewer">
-  <button class="viewer-close" onclick="closeImageViewer()" aria-label="Close image viewer">&times;</button>
-  <div class="image-stage">
-    <img id="viewerImg" src="" alt="">
+    <button class="viewer-close" onclick="closeImageViewer()" aria-label="Close image viewer">&times;</button>
+    <div class="image-stage">
+      <img id="viewerImg" src="" alt="">
+    </div>
   </div>
-</div>
-  
+
   <script>
-    // ===== Load people from CSV in your GitHub repo =====
     const CSV_URL = "https://raw.githubusercontent.com/Ybanna1/Wedding-seating-test/main/floorplan.csv";
 
     async function loadPeopleFromCSV() {
@@ -533,18 +485,16 @@ body.keyboard-open #results{
       const csvText = await res.text();
       const parsed = Papa.parse(csvText, { header: true, skipEmptyLines: true });
 
-      // Accepts displayName (required), optional table/name
       return parsed.data
         .map(row => {
-          // normalise headers (trim/lowercase)
           const norm = {};
           for (const [k, v] of Object.entries(row)) {
             norm[String(k).trim().toLowerCase()] = v;
           }
+
           const displayName = String(norm["displayname"] || "").trim();
           if (!displayName) return null;
 
-          // accept table / table number / seat variants
           const tableAliases = ["table","table#","table number","tableno","table_no","seat"];
           let tableVal = "";
           for (const key of tableAliases) {
@@ -553,6 +503,7 @@ body.keyboard-open #results{
               break;
             }
           }
+
           const name = (norm["name"] ? String(norm["name"]) : displayName).toLowerCase().trim();
           return { displayName, name, table: tableVal };
         })
@@ -563,123 +514,133 @@ body.keyboard-open #results{
       let people = [];
       try { people = await loadPeopleFromCSV(); } catch { people = []; }
 
-const fuse = new Fuse(people, { keys: ["name", "displayName"], threshold: 0.3, ignoreLocation: true });
-const searchEl = document.getElementById("search");
-const resultsDiv = document.getElementById("results");
+      const fuse = new Fuse(people, {
+        keys: ["name", "displayName"],
+        threshold: 0.3,
+        ignoreLocation: true
+      });
+
+      const searchEl = document.getElementById("search");
+      const resultsDiv = document.getElementById("results");
 
       searchEl.addEventListener("focus", () => {
-  document.body.classList.add("keyboard-open");
-});
+        document.body.classList.add("keyboard-open");
+      });
 
-searchEl.addEventListener("blur", () => {
-  setTimeout(() => {
-    document.body.classList.remove("keyboard-open");
-  }, 150);
-});
+      searchEl.addEventListener("blur", () => {
+        setTimeout(() => {
+          document.body.classList.remove("keyboard-open");
+        }, 150);
+      });
 
-searchEl.addEventListener("input", function(){
-  const q = this.value.trim();
-  resultsDiv.innerHTML = "";
+      searchEl.addEventListener("input", function(){
+        const q = this.value.trim();
+        resultsDiv.innerHTML = "";
 
-  if (!q) return;
+        if (!q) return;
 
-  const out = fuse.search(q);
-  if (!out.length) {
-    resultsDiv.innerHTML = '<div class="empty">No match found</div>';
-    return;
-  }
+        const out = fuse.search(q);
+        if (!out.length) {
+          resultsDiv.innerHTML = '<div class="empty">No match found</div>';
+          return;
+        }
 
-  out.slice(0,50).forEach(({ item: p }) => {
-    const div = document.createElement("div");
-    div.className = "entry";
+        out.slice(0, 50).forEach(({ item: p }) => {
+          const div = document.createElement("div");
+          div.className = "entry";
 
-    if (p.table) {
-      const tableNum = p.table.replace(/[^0-9]/g,'');
-      const imgName = `table${tableNum}.jpg`;
-      div.innerHTML = `
-        <strong>${p.displayName}</strong>
-        <div class="table-label">Table ${p.table}</div>
-        <button type="button" class="result-view-btn" onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')">View table image</button>
-      `;
-    } else {
-      div.textContent = p.displayName;
-    }
+          if (p.table) {
+            const tableNum = p.table.replace(/[^0-9]/g, '');
+            const imgName = `table${tableNum}.jpg`;
+            div.innerHTML = `
+              <strong>${p.displayName}</strong>
+              <div class="table-label">Table ${p.table}</div>
+              <img
+                src="${imgName}"
+                alt="Location of table ${p.table}"
+                onclick="openImageViewer('${imgName}', 'Location of table ${p.table}')"
+                onerror="this.style.display='none'"
+              >
+            `;
+          } else {
+            div.textContent = p.displayName;
+          }
 
-    resultsDiv.appendChild(div);
-  });
-});
+          resultsDiv.appendChild(div);
+        });
+      });
     })();
 
-    // ===== Popups: click outside to close, sticky X stays visible =====
     function openPopup(id) {
-  document.getElementById(id).style.display = 'block';
-}
-
-function closePopup(id) {
-  document.getElementById(id).style.display = 'none';
-}
-
-document.querySelectorAll('.popup').forEach(popup => {
-  const content = popup.querySelector('.popup-content');
-  const img = popup.querySelector('img');
-
-  popup.addEventListener('click', function() {
-    closePopup(popup.id);
-  });
-
-  content.addEventListener('click', function(e) {
-    if (e.target === content) {
-      closePopup(popup.id);
-      return;
+      document.getElementById(id).style.display = 'block';
     }
-    e.stopPropagation();
-  });
 
-  if (img) {
-    img.addEventListener('click', function(e) {
+    function closePopup(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    document.querySelectorAll('.popup').forEach(popup => {
+      const content = popup.querySelector('.popup-content');
+      const img = popup.querySelector('img');
+
+      popup.addEventListener('click', function() {
+        closePopup(popup.id);
+      });
+
+      content.addEventListener('click', function(e) {
+        if (e.target === content) {
+          closePopup(popup.id);
+          return;
+        }
+        e.stopPropagation();
+      });
+
+      if (img) {
+        img.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
+    });
+
+    window.openPopup = openPopup;
+    window.closePopup = closePopup;
+
+    function openImageViewer(src, alt) {
+      const viewer = document.getElementById('imageViewer');
+      const img = document.getElementById('viewerImg');
+      img.src = src;
+      img.alt = alt || '';
+      viewer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageViewer() {
+      const viewer = document.getElementById('imageViewer');
+      const img = document.getElementById('viewerImg');
+      viewer.classList.remove('open');
+      img.src = '';
+      document.body.style.overflow = '';
+    }
+
+    const imageViewer = document.getElementById('imageViewer');
+    const imageStage = document.querySelector('.image-stage');
+    const viewerImg = document.getElementById('viewerImg');
+
+    imageViewer.addEventListener('click', function() {
+      closeImageViewer();
+    });
+
+    imageStage.addEventListener('click', function(e){
+      if (e.target === imageStage) {
+        closeImageViewer();
+        return;
+      }
       e.stopPropagation();
     });
-  }
-});
 
-window.openPopup = openPopup;
-window.closePopup = closePopup;
-    function openImageViewer(src, alt) {
-  const viewer = document.getElementById('imageViewer');
-  const img = document.getElementById('viewerImg');
-  img.src = src;
-  img.alt = alt || '';
-  viewer.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeImageViewer() {
-  const viewer = document.getElementById('imageViewer');
-  const img = document.getElementById('viewerImg');
-  viewer.classList.remove('open');
-  img.src = '';
-  document.body.style.overflow = '';
-}
-
-const imageViewer = document.getElementById('imageViewer');
-const imageStage = document.querySelector('.image-stage');
-const viewerImg = document.getElementById('viewerImg');
-
-imageViewer.addEventListener('click', function() {
-  closeImageViewer();
-});
-
-imageStage.addEventListener('click', function(e){
-  if (e.target === imageStage) {
-    closeImageViewer();
-    return;
-  }
-  e.stopPropagation();
-});
-
-viewerImg.addEventListener('click', function(e){
-  e.stopPropagation();
-});
+    viewerImg.addEventListener('click', function(e){
+      e.stopPropagation();
+    });
   </script>
 </body>
 </html>
