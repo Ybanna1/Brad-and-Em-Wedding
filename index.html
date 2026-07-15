@@ -344,10 +344,6 @@
         max-width: 100%;
       }
 
-      body.keyboard-open .hero{
-        min-height: auto;
-      }
-
       .hero{
         padding: 18px 16px 18px;
         border-radius: 22px;
@@ -389,7 +385,7 @@
 
       #results{
         margin-top: 12px;
-        max-height: 48svh;
+        max-height: 56svh;
         overflow-y: auto;
         padding-right: 4px;
         -webkit-overflow-scrolling: touch;
@@ -446,7 +442,7 @@
 
       <div id="results"></div>
 
-      <div class="quick-links" id="quickLinks">
+      <div class="quick-links">
         <button type="button" onclick="openPopup('floorplanPopup')">Floor Plan</button>
         <button type="button" onclick="openPopup('menuPopup')">Menu</button>
         <a id="lenseAnchor" href="#" target="_blank" rel="noopener">Lense</a>
@@ -522,16 +518,6 @@
 
       const searchEl = document.getElementById("search");
       const resultsDiv = document.getElementById("results");
-
-      searchEl.addEventListener("focus", () => {
-        document.body.classList.add("keyboard-open");
-      });
-
-      searchEl.addEventListener("blur", () => {
-        setTimeout(() => {
-          document.body.classList.remove("keyboard-open");
-        }, 150);
-      });
 
       searchEl.addEventListener("input", function(){
         const q = this.value.trim();
