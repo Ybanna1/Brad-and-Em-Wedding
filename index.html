@@ -430,7 +430,7 @@
     <section class="hero">
       <img src="logo.png" alt="Brad and Em" class="hero-logo">
       <h1>Find Your Seat</h1>
-      <p class="subtitle">Search your name to find your table, then view the floor plan or menu.</p>
+      <p class="subtitle">Search your name to find your table, then view the floor plan, schedule, or menu.</p>
 
       <div class="search-wrap">
         <label for="search" class="search-label">Guest name</label>
@@ -440,12 +440,20 @@
       <div id="results"></div>
 
       <div class="quick-links">
+        <button type="button" onclick="openPopup('schedulePopup')">Schedule</button>
         <button type="button" onclick="openPopup('floorplanPopup')">Floor Plan</button>
         <button type="button" onclick="openPopup('menuPopup')">Menu</button>
         <a id="lenseAnchor" href="https://lense.app/join-event/d3911231c49a6fd1-1cb6f719" target="_blank" rel="noopener">📸 Share The Memories</a>
         <a href="https://play.blooket.com/play" target="_blank" rel="noopener noreferrer">Quiz Time!</a>
       </div>
     </section>
+  </div>
+
+  <div id="schedulePopup" class="popup" role="dialog" aria-modal="true" aria-label="Wedding schedule">
+    <div class="popup-content">
+      <button type="button" class="close" onclick="closePopup('schedulePopup'); event.stopPropagation();" aria-label="Close">&times;</button>
+      <img id="scheduleImg" src="weddingschedule.jpg" alt="Wedding Schedule" loading="lazy">
+    </div>
   </div>
 
   <div id="floorplanPopup" class="popup" role="dialog" aria-modal="true" aria-label="Floor plan">
@@ -524,7 +532,6 @@
           searchEl.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 250);
       });
-
 
       searchEl.addEventListener("blur", () => {
         setTimeout(() => {
